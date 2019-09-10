@@ -1,10 +1,10 @@
 {
   "manifestVersion": 1,
-  "id": "GeertvanderCruijsen-Vsts-Release-AzureWebAppVFS",
+  "id": "Iffa-Vsts-Release-AzureWebAppVFS",
   "name": "Azure WebApp Virtual File System Tasks",
   "version": "2.0.0",
-  "publisher": "geertvdcruijsen",
-  "public": true,
+  "publisher": "SanteriElo",
+  "public": false,
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
@@ -12,38 +12,24 @@
   ],
   "description": "Delete files from Azure Web Apps through KUDU Virtual File System Rest API (Put & Get coming soon)",
   "categories": [
-    "Build and release"
-  ],
-  "tags": [
-    "Kudu",
-    "Azure",
-    "VFS",
-    "File",
-    "Virtual File System",
-    "Delete",
-    "WebApp",
-    "App Service",
-    "Xpirit"
+    "Azure Pipelines"
   ],
   "screenshots": [
     {
-       "path": "geertvdc.vsts.azurewebappvfs.extension/images/1.png"
+       "path": "iffa.vsts.azurewebappvfs.extension/images/1.png"
     }
   ],
   "content": {
     "details": {
-      "path": "geertvdc.vsts.azurewebappvfs.extension/readme.md"
+      "path": "iffa.vsts.azurewebappvfs.extension/readme.md"
     },
     "license": {
-      "path": "geertvdc.vsts.azurewebappvfs.extension/license.txt"
+      "path": "iffa.vsts.azurewebappvfs.extension/license.txt"
     }
   },
   "links": {
-    "getstarted": {
-      "uri": "https://mobilefirstcloudfirst.net/2017/02/created-open-source-vsts-build-release-task-azure-web-app-virtual-file-system/"
-    },
     "support": {
-      "uri": "https://github.com/Geertvdc/VSTS-Build-AzureWebAppVFS"
+      "uri": "https://github.com/iffa/VSTS-Build-AzureWebAppVFS"
     }
   },
   "branding": {
@@ -51,23 +37,23 @@
     "theme": "light"
   },
   "icons": {
-    "default": "geertvdc.vsts.azurewebappvfs.extension/images/icon-large.png"
+    "default": "iffa.vsts.azurewebappvfs.extension/images/icon-large.png"
   },
   "files": [
     {
-      "path": "geertvdc-vsts-azurewebappvfs-delete"
+      "path": "iffa-vsts-azurewebappvfs-delete"
     }
   ],
 
   "contributions": [
     {
-      "id": "geertvdc-vsts-azurewebappvfs-delete",
+      "id": "iffa-vsts-azurewebappvfs-delete",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "geertvdc-vsts-azurewebappvfs-delete"
+        "name": "iffa-vsts-azurewebappvfs-delete"
       }
     }
   ]
