@@ -53,10 +53,10 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 }
 
 function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
-	Write-Output "Remove-FileFromWebApp path: $filePath"
+	Write-Host "Remove-FileFromWebApp path: $filePath"
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
 		
-		Write-Output "Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
+		Write-Host "Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
 		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
 		foreach($file in $dirs){
 			$href = $file.href
@@ -90,7 +90,7 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 	}
 	catch {
 		if($_.Exception.Response.StatusCode.value__ -eq "404" -and $continueIfFileNotExist -eq $true){
-			Write-Output "File not found (but ignored because of setting)"
+			Write-Host "File not found (but ignored because of setting)"
 		}
 		else {
 			throw $_.Exception
