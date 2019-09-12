@@ -14,10 +14,10 @@ $continueIfFileNotExist = Get-VstsInput -Name continueIfFileNotExist
 # Initialize Azure.
 Import-Module $PSScriptRoot\ps_modules\VstsAzureHelpers_
 Initialize-Azure
-Write-Output "Azure Initialized"
+Write-Host "Azure Initialized"
 
 Import-Module $PSScriptRoot\vfs
-Write-Output "VFS scripts Initialized"
+Write-Host "VFS scripts Initialized"
 
 if ([string]::IsNullOrWhiteSpace($ResourceGroupName)) {
 	$webapp = Get-AzureRmWebApp -name "$WebAppName"
@@ -25,15 +25,15 @@ if ([string]::IsNullOrWhiteSpace($ResourceGroupName)) {
 }
 
 
-Write-Output "Retrieved web app: $webapp in Resource group: $resourceGroup"
-Write-Output "Retrieving publishing profile"
+Write-Host "Retrieved web app: $webapp in Resource group: $resourceGroup"
+Write-Host "Retrieving publishing profile"
 if ([string]::IsNullOrWhiteSpace($SlotName)) {
 	$login = Get-AzureRmWebAppPublishingCredentials "$ResourceGroupName" "$WebAppName" 
 }
 else {
 	$login = Get-AzureRmWebAppPublishingCredentials "$ResourceGroupName" "$WebAppName" "$SlotName"
 }
-Write-Output "Publishing profile retrieved"
+Write-Host "Publishing profile retrieved"
 
 $username = $login.Properties.PublishingUserName
 $pw = $login.Properties.PublishingPassword

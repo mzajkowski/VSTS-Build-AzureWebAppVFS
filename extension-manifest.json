@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "Iffa-Vsts-Release-AzureWebAppVFS",
   "name": "Azure WebApp Virtual File System Tasks",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "publisher": "SanteriElo",
   "public": false,
   "targets": [
