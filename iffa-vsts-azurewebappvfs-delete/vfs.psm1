@@ -53,23 +53,17 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 }
 
 function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
-
 	Write-Output "Remove-FileFromWebApp path: $filePath"
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
 		
 		Write-Output "Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
 		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
-		$count = $dirs.count
-		Write-Output "Iterating over path, count: $count"
 		foreach($file in $dirs){
-			Write-Output "foreach $file"
 			$href = $file.href
 			$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
 
 			Remove-FileFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
 		}
-
-		Write-Output "Iteration complete, removing folder itself"
 
 		Remove-FileFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $false
 
@@ -87,8 +81,6 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 	if($alternativeUrl -ne ""){
 			$kuduApiUrl = $kuduApiUrl.Replace("scm.azurewebsites.net","$alternativeUrl")
 	}
-
-	Write-Output "url $kuduApiUrl"
 
 	try {
 		Invoke-RestMethod -Uri $kuduApiUrl `
