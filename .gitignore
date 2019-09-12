@@ -253,3 +253,5 @@ paket-files/
 
 # ignore built extensions
 *.vsix
+
+**/.DS_Store

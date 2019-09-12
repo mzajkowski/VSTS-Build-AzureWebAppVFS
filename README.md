@@ -4,7 +4,7 @@ A custom Azure DevOps deployment task for deleting files and/or folders from the
 
 If you want to deploy this extension and use it as a part of your build, please consult Microsoft's documentation: https://docs.microsoft.com/en-us/azure/devops/extend/publish/overview?view=azure-devops
 
-In the future I may publish this publically, but for now you must do it yourself. Pull requests are more than welcome.
+![Screenshot](iffa.vsts.azurewebappvfs.extension/images/1.png)
 
 ## Why not simply use "Remove additional files at destination"?
 
