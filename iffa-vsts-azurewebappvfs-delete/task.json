@@ -3,16 +3,15 @@
     "name": "WebAppVFSDelete",
     "friendlyName": "Delete Item from Azure Web App",
     "description": "Delete Item from Azure Web App through Kudu VFS Rest API",
-    "helpMarkDown": "Version: 2.0. [More Information](https://github.com/Geertvdc/VSTS-Build-AzureWebAppVFS)",
+    "helpMarkDown": "Version: 2.2.0 - [More Information](https://github.com/iffa/VSTS-Build-AzureWebAppVFS)",
     "category": "Utility",
-    "author": "Geert van der Cruijsen",
+    "author": "Santeri Elo",
     "version": {
         "Major": 2,
-        "Minor": 0,
+        "Minor": 2,
         "Patch": 0
     },
     "visibility": [
-      "Build",
       "Release"
     ],
     "demands": [ "azureps" ],
@@ -42,7 +41,7 @@
             "properties": {
                 "EditableOptions": "True"
             },
-            "helpMarkDown": "Enter or Select the name of an existing Azure App Service."
+            "helpMarkDown": "Enter or select the name of an existing Azure App Service."
         },
         {
             "name": "DeployToSlotFlag",
@@ -82,7 +81,7 @@
             "label": "File URL",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "the file or directory path after the wwwroot/ of your Azure Web app. paths ending with / are marked as directories"
+            "helpMarkDown": "The file or directory path after the wwwroot/ of your Azure Web app. Paths ending with / are marked as directories."
         },
         {
             "name": "deleteRecursive",
@@ -91,7 +90,7 @@
             "label": "Recursive Delete",
             "defaultValue": true,
             "required": false,
-            "helpMarkDown": "delete all subfolders and files in selected directory"
+            "helpMarkDown": "Delete all subfolders and files in the selected directory"
         },
         {
             "name": "continueIfFileNotExist",
@@ -100,7 +99,7 @@
             "label": "Skip non existing path",
             "defaultValue": true,
             "required": false,
-            "helpMarkDown": "If file that is being deleted does not exist on path continue on 404 error?"
+            "helpMarkDown": "If enabled, attempting to delete nonexistent files will be silently ignored"
         },
         {
             "name": "allowUnsafe",
@@ -109,7 +108,7 @@
             "label": "Allow Self Signed Certificates",
             "defaultValue": false,
             "required": false,
-            "helpMarkDown": "enable this to ignore self signed certification errors"
+            "helpMarkDown": "Enable this to ignore self signed certification errors"
         },
         {
             "name": "alternativeKuduUrl",
@@ -118,7 +117,7 @@
             "groupName" : "Advanced",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "value of SCM endpoint if it is not website.scm.azurewebsites.net (fill in only last part starting with scm.)"
+            "helpMarkDown": "Value of SCM endpoint if it is not website.scm.azurewebsites.net (fill in only last part starting with scm.)"
         }
     ],
     "dataSourceBindings": [

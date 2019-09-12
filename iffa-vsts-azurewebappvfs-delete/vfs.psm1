@@ -39,7 +39,12 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 	}
 	catch {
 		if($_.Exception.Response.StatusCode.value__ -eq "404" -and $continueIfFileNotExist -eq $true){
-			Write-Output "File not found (but ignored because of setting)"
+			# Dont write to output as it is returned from the function
+			# Write-Output "File not found (but ignored because of setting)"
+
+			# Return empty array so as not to iterate for 404
+			$arr = @()
+			return ,$arr		  
 		}
 		else {
 			throw $_.Exception
@@ -48,7 +53,6 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 }
 
 function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
-
 	Write-Output "Remove-FileFromWebApp path: $filePath"
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
 		
@@ -77,8 +81,6 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 	if($alternativeUrl -ne ""){
 			$kuduApiUrl = $kuduApiUrl.Replace("scm.azurewebsites.net","$alternativeUrl")
 	}
-
-	Write-Output "url $kuduApiUrl"
 
 	try {
 		Invoke-RestMethod -Uri $kuduApiUrl `

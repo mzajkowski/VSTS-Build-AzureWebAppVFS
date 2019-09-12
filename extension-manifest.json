@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "Iffa-Vsts-Release-AzureWebAppVFS",
   "name": "Azure WebApp Virtual File System Tasks",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "publisher": "SanteriElo",
   "public": false,
   "targets": [
@@ -10,7 +10,7 @@
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "description": "Delete files from Azure Web Apps through KUDU Virtual File System Rest API (Put & Get coming soon)",
+  "description": "Delete files from Azure Web Apps through KUDU Virtual File System Rest API",
   "categories": [
     "Azure Pipelines"
   ],
