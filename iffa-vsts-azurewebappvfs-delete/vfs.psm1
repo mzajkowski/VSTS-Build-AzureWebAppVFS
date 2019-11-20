@@ -77,10 +77,10 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 
 		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
 		foreach($file in $dirs){
-			if($file.EndsWith($expresion)){
-				$href = $file.href
-				$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
+			$href = $file.href
+			$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
 
+			if($filename.EndsWith($expresion)){
 				Remove-FileFromWebApp -webAppName "$webAppName" -username $username -password $password -filePath "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
 			}
 		}

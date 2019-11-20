@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "delete-files-from-azure-webapp",
-  "version": "2.3.3",
+  "version": "2.3.5",
   "name": "Delete Files from Azure Web App",
   "publisher": "Cogworks",
   "description": "Delete files from Azure Web Apps through KUDU Virtual File System Rest API (extended version)",
