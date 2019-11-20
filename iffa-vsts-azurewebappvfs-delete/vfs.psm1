@@ -75,12 +75,16 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 
 		Write-Host "[CUSTOM] Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
 
+		$expression = $filePath.Substring($filePath.LastIndexOf('/')+2, $filePath.Length-$filePath.LastIndexOf('/')-2)
 		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
+		
 		foreach($file in $dirs){
 			$href = $file.href
 			$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
 
-			if($filename.EndsWith($expresion)){
+			if($filename.EndsWith($expression)){
+				Write-Host "[CUSTOM] Found matching file: $filePath"
+
 				Remove-FileFromWebApp -webAppName "$webAppName" -username $username -password $password -filePath "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
 			}
 		}

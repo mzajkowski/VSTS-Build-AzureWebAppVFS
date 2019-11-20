@@ -3,13 +3,13 @@
     "name": "WebAppFilesDeleteExtended",
     "friendlyName": "Delete Files from Azure Web App",
     "description": "Delete Files from Azure Web App through Kudu VFS Rest API (extended version)",
-    "helpMarkDown": "Version: 2.3.5 - [More Information](https://github.com/mzajkowski/VSTS-Build-AzureWebAppVFS)",
+    "helpMarkDown": "Version: 2.3.6 - [More Information](https://github.com/mzajkowski/VSTS-Build-AzureWebAppVFS)",
     "category": "Utility",
     "author": "Cogworks",
     "version": {
         "Major": 2,
         "Minor": 3,
-        "Patch": 5
+        "Patch": 6
     },
     "visibility": [
       "Release"
