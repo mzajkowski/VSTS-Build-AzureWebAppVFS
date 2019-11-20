@@ -1,15 +1,15 @@
 {
     "id": "25104ad4-8a3e-4543-9405-419adbe1b2fd",
-    "name": "WebAppVFSDelete",
-    "friendlyName": "Delete Item from Azure Web App",
-    "description": "Delete Item from Azure Web App through Kudu VFS Rest API",
-    "helpMarkDown": "Version: 2.2.2 - [More Information](https://github.com/iffa/VSTS-Build-AzureWebAppVFS)",
+    "name": "WebAppFilesDeleteExtended",
+    "friendlyName": "Delete Files from Azure Web App",
+    "description": "Delete Files from Azure Web App through Kudu VFS Rest API (extended version)",
+    "helpMarkDown": "Version: 2.3.0 - [More Information](https://github.com/mzajkowski/VSTS-Build-AzureWebAppVFS)",
     "category": "Utility",
-    "author": "Santeri Elo",
+    "author": "Marcin Zajkowski",
     "version": {
         "Major": 2,
-        "Minor": 2,
-        "Patch": 2
+        "Minor": 3,
+        "Patch": 0
     },
     "visibility": [
       "Release"
@@ -77,11 +77,11 @@
         },
         {
             "name": "filePath",
-            "type": "string",
-            "label": "File URL",
+            "type": "multiLine",
+            "label": "Contents",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The file or directory path after the wwwroot/ of your Azure Web app. Paths ending with / are marked as directories."
+            "helpMarkDown": "The filed or directory paths after the wwwroot/ of your Azure Web app. Paths ending with / are marked as directories."
         },
         {
             "name": "deleteRecursive",
