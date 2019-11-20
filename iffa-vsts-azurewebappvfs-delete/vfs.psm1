@@ -12,11 +12,11 @@ function Get-AzureRmWebAppPublishingCredentials($resourceGroupName, $webAppName,
     	return $publishingCredentials
 }
 
-function Get-KuduApiAuthorisationToken($username, [SecureString] $password){
+function Get-KuduApiAuthorisationToken($username, $password){
     return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username,$password))))
 }
 
-function Get-FileListFromWebApp($webAppName, $slotName = "", $username, [SecureString] $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist){
+function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist){
 
     $kuduApiAuthorisationToken = Get-KuduApiAuthorisationToken $username $password
     if ($slotName -eq ""){				
@@ -52,7 +52,7 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, [SecureS
 	}
 }
 
-function Remove-FileFromWebApp($webAppName, $slotName = "", $username, [SecureString] $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
+function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
 	Write-Host "Remove-FileFromWebApp path: $filePath"
 
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
