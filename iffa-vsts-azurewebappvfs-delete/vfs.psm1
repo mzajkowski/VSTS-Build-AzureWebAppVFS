@@ -52,7 +52,7 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 	}
 }
 
-function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
+function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $directory = "", $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
 	Write-Host "Remove-FileFromWebApp path: $filePath"
 
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
@@ -73,22 +73,27 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 
 	if($deleteRecursive -eq $true -and $filePath.StartsWith("**/*.")){
 
-		Write-Host "[CUSTOM] Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
+		Write-Host "Delete all files matching the pattern (recursively): $filePath"
 
-		$expression = $filePath.Substring($filePath.LastIndexOf('/')+2, $filePath.Length-$filePath.LastIndexOf('/')-2)
-		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
+		$pattern = $filePath.Substring($filePath.LastIndexOf('/')+2)
+		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath $directory -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
 		
 		foreach($file in $dirs){
 			$href = $file.href
 			$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
 
-			if($filename.EndsWith($expression)){
-				Write-Host "[CUSTOM] Found matching file: $filePath"
+			if($filename.EndsWith($pattern, "CurrentCultureIgnoreCase")){
+				Write-Host "Match found. Deleting: $filePath"
 
 				Remove-FileFromWebApp -webAppName "$webAppName" -username $username -password $password -filePath "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
 			}
+
+			if($filename.EndsWith("/")) {
+				Remove-FileFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filePath" -directory "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
+			}
 		}
 
+		return
 	}
 
     $kuduApiAuthorisationToken = Get-KuduApiAuthorisationToken $username $password
@@ -100,7 +105,7 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
     }
 
 	if($alternativeUrl -ne ""){
-			$kuduApiUrl = $kuduApiUrl.Replace("scm.azurewebsites.net","$alternativeUrl")
+		$kuduApiUrl = $kuduApiUrl.Replace("scm.azurewebsites.net","$alternativeUrl")
 	}
 
 	try {
