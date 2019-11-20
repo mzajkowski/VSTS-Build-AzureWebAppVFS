@@ -1,3 +1,1 @@
-tfx login
-
-tfx extension create --manifest-globs extension-manifest.json
+tfx extension create --manifest-globs extension-manifest.json --rev-version

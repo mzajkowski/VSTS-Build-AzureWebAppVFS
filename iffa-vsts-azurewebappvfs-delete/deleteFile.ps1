@@ -4,7 +4,7 @@ $ConnectedServiceName = Get-VstsInput -Name ConnectedServiceName -Require
 $WebAppName = Get-VstsInput -Name WebAppName -Require
 $ResourceGroupName = Get-VstsInput -Name ResourceGroupName
 $SlotName = Get-VstsInput -Name SlotName
-$filePath = Get-VstsInput -Name filePath -Require
+$filePaths = Get-VstsInput -Name filePath -Require
 $deleteRecursive = Get-VstsInput -Name deleteRecursive 
 $allowUnsafe = Get-VstsInput -Name allowUnsafe
 $alternativeKuduUrl = Get-VstsInput -Name alternativeKuduUrl 
@@ -53,5 +53,8 @@ if($allowUnsafe -eq $true){
 		[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
 
+$filePathsArray = $filePaths.Split([Environment]::NewLine)
 
-Remove-FileFromWebApp -webAppName "$WebAppName" -slotName "$SlotName" -username "$username" -password "$pw" -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeKuduUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
+foreach ($filePath in $filePathsArray) {
+	Remove-FileFromWebApp -webAppName "$WebAppName" -slotName "$SlotName" -username "$username" -password "$pw" -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeKuduUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
+}
