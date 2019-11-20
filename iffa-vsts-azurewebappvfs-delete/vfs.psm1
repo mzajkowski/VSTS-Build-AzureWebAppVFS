@@ -12,11 +12,11 @@ function Get-AzureRmWebAppPublishingCredentials($resourceGroupName, $webAppName,
     	return $publishingCredentials
 }
 
-function Get-KuduApiAuthorisationToken($username, $password){
+function Get-KuduApiAuthorisationToken($username, [SecureString] $password){
     return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username,$password))))
 }
 
-function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist){
+function Get-FileListFromWebApp($webAppName, $slotName = "", $username, [SecureString] $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist){
 
     $kuduApiAuthorisationToken = Get-KuduApiAuthorisationToken $username $password
     if ($slotName -eq ""){				
@@ -52,8 +52,9 @@ function Get-FileListFromWebApp($webAppName, $slotName = "", $username, $passwor
 	}
 }
 
-function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
+function Remove-FileFromWebApp($webAppName, $slotName = "", $username, [SecureString] $password, $filePath, $allowUnsafe = $false, $alternativeUrl, $continueIfFileNotExist, $deleteRecursive){
 	Write-Host "Remove-FileFromWebApp path: $filePath"
+
 	if($deleteRecursive -eq $true -and $filePath.EndsWith("/")){
 		
 		Write-Host "Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
@@ -68,6 +69,22 @@ function Remove-FileFromWebApp($webAppName, $slotName = "", $username, $password
 		Remove-FileFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "$filePath" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $false
 
 		return
+	}
+
+	if($deleteRecursive -eq $true -and $filePath.StartsWith("**/*.")){
+
+		Write-Host "[CUSTOM] Recursive delete so Get-FileListFromWebApp to see which files to delete: $filePath"
+
+		$dirs = Get-FileListFromWebApp -webAppName "$webAppName" -slotName "$slotName" -username $username -password $password -filePath "" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist
+		foreach($file in $dirs){
+			if($file.EndsWith($expresion)){
+				$href = $file.href
+				$filename = $href.Substring($file.href.IndexOf("/vfs/site/wwwroot/")+18)
+
+				Remove-FileFromWebApp -webAppName "$webAppName" -username $username -password $password -filePath "$filename" -allowUnsafe $allowUnsafe -alternativeUrl $alternativeUrl -continueIfFileNotExist $continueIfFileNotExist -deleteRecursive $deleteRecursive
+			}
+		}
+
 	}
 
     $kuduApiAuthorisationToken = Get-KuduApiAuthorisationToken $username $password
